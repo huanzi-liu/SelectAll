@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.example.administrator.SwipeMenuLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="50dp"
+    android:background="#fff"
+    >
+
+    <TextView
+        android:id="@+id/tv"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="@string/app_name"
+        android:gravity="center"
+        />
+    <TextView
+        android:id="@+id/tv_update"
+        android:layout_width="80dp"
+        android:layout_height="match_parent"
+        android:text="修改"
+        android:background="#acacac"
+        android:gravity="center"
+        />
+    <TextView
+        android:id="@+id/tv_delete"
+        android:layout_width="80dp"
+        android:layout_height="match_parent"
+        android:text="删除"
+        android:background="#ff0000"
+        android:gravity="center"
+        />
+
+</com.example.administrator.SwipeMenuLayout>

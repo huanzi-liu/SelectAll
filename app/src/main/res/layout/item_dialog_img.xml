@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#fff"
+    >
+
+    <TextView
+        android:id="@+id/tv_xiang"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:text="相册"
+        android:gravity="center"
+        />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#acacac"
+        />
+    <TextView
+        android:id="@+id/tv_pai"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:text="拍照"
+        android:gravity="center"
+        />
+
+</LinearLayout>
