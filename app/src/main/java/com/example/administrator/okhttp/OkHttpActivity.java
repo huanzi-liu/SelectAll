@@ -94,7 +94,6 @@ public class OkHttpActivity extends AppCompatActivity {
     }
 
     private void downloadFileRequest(){
-
 //        if (){
 //
 //        }
