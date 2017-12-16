@@ -23,3 +23,18 @@
 # If you keep the line number information, uncomment this to
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
+
+-keepclassmembers class ** {
+    @com.yanzhenjie.permission.PermissionYes <methods>;
+}
+-keepclassmembers class ** {
+    @com.yanzhenjie.permission.PermissionNo <methods>;
+}
+
+#okhttp
+-dontwarn okhttp3.**
+-keep class okhttp3.**{*;}
+
+#okio
+-dontwarn okio.**
+-keep class okio.**{*;}

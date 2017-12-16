@@ -3,6 +3,7 @@ package com.example.administrator.okhttp.response;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
+import android.util.Log;
 
 import com.example.administrator.okhttp.exception.OkHttpException;
 import com.example.administrator.okhttp.listener.DisposeDataHandle;
@@ -22,7 +23,7 @@ import okhttp3.Response;
  * @date 2017\12\9 0009
  * @explain 处理文件下载的回调
  */
-public class CommonFileCallback implements Callback{
+public class CommonFileCallback implements Callback {
 
     protected final int NETWORK_ERROR = -1;
     protected final int IO_ERROR = -2;
@@ -33,18 +34,18 @@ public class CommonFileCallback implements Callback{
     private DisposeDownLoadListener listener;
     private String filePath;
     private int progress;
+    File file = null;
 
+    public CommonFileCallback(DisposeDataHandle handle) {
 
-    public CommonFileCallback(DisposeDataHandle handle){
-
-        this.listener = (DisposeDownLoadListener)handle.listener;
+        this.listener = (DisposeDownLoadListener) handle.listener;
         this.filePath = handle.source;
 
-        this.handler = new Handler(Looper.getMainLooper()){
+        this.handler = new Handler(Looper.getMainLooper()) {
             @Override
             public void handleMessage(Message msg) {
                 super.handleMessage(msg);
-                switch (msg.what){
+                switch (msg.what) {
                     case PROGRESS_MESSAGE:
                         listener.onProgress((int) msg.obj);
                         break;
@@ -59,7 +60,7 @@ public class CommonFileCallback implements Callback{
         handler.post(new Runnable() {
             @Override
             public void run() {
-                listener.onFailure(new OkHttpException(NETWORK_ERROR,e));
+                listener.onFailure(new OkHttpException(NETWORK_ERROR, e));
             }
         });
 
@@ -68,14 +69,17 @@ public class CommonFileCallback implements Callback{
     @Override
     public void onResponse(Call call, Response response) throws IOException {
 
-        final File file = handlerResponse(response);
+
+        if (response != null) {
+            file = handlerResponse(response);
+        }
         handler.post(new Runnable() {
             @Override
             public void run() {
-                if (file != null){
+                if (file != null) {
                     listener.onSuccess(file);
-                }else{
-                    listener.onFailure(new OkHttpException(IO_ERROR,EMPTY_MSG));
+                } else {
+                    listener.onFailure(new OkHttpException(IO_ERROR, EMPTY_MSG));
                 }
             }
         });
@@ -83,8 +87,8 @@ public class CommonFileCallback implements Callback{
 
     }
 
-    public File handlerResponse(Response response){
-        if (response == null){
+    public File handlerResponse(Response response) {
+        if (response == null) {
             return null;
         }
         InputStream is = null;
@@ -95,34 +99,27 @@ public class CommonFileCallback implements Callback{
         int length = -1;
         int currentLength = 0;
         double sumLength = 0;
-
         try {
 
             file = new File(filePath);
-            fos = new FileOutputStream(file);
             is = response.body().byteStream();
-            sumLength = response.body().contentLength();
-            while ((length = is.read(buffor)) != -1 ){
-                fos.write(buffor,0,length);
+            fos = new FileOutputStream(file);
+            sumLength = (double)response.body().contentLength();
+            while ((length = is.read(buffor)) != -1) {
+                fos.write(buffor, 0, length);
                 currentLength += length;
-                progress = currentLength / length * 100;
-                handler.obtainMessage(PROGRESS_MESSAGE,progress).sendToTarget();
+                progress = (int)(currentLength / sumLength * 100);
+                handler.obtainMessage(PROGRESS_MESSAGE, progress).sendToTarget();
             }
 
-            fos.flush();
-
-        }catch (Exception e){
+//            fos.flush();
+            fos.close();
+            is.close();
+        } catch (Exception e) {
             file = null;
             e.printStackTrace();
 
-        }finally {
-            try {
-                fos.close();
-            }catch (IOException e){
-                e.printStackTrace();
-            }
         }
-
 
         return file;
     }

@@ -35,9 +35,10 @@ dependencies {
     compile 'com.makeramen:roundedimageview:2.3.0'
     compile 'com.mylhyl:acp:1.1.7'
     compile 'com.github.donkingliang:GroupedRecyclerViewAdapter:1.2.0'
-    compile 'com.squareup.okhttp3:okhttp:3.3.1'
+    compile 'com.squareup.okhttp3:okhttp:3.6.0'
     testCompile 'junit:junit:4.12'
     apt 'com.jakewharton:butterknife-compiler:8.4.0'
     compile 'com.google.code.gson:gson:2.7'
+    compile 'com.yanzhenjie:permission:1.1.2'
 
 }

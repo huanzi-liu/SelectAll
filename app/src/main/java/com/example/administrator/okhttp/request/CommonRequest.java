@@ -71,9 +71,11 @@ public class CommonRequest {
             for (Map.Entry<String, Object> entry : params.fileParams.entrySet()
                     ) {
                 if (entry.getValue() instanceof File) {
-                    mb.addPart(Headers.of("Content-Disposition", "form-data;name=\"" + entry.getKey() + "\""), RequestBody.create(FILE_TYPE, (File) entry.getValue()));
+                    mb.addPart(Headers.of("Content-Disposition", "form-data;name=\"" + entry.getKey() + "\""),
+                            RequestBody.create(FILE_TYPE, (File) entry.getValue()));
                 } else if (entry.getValue() instanceof String) {
-                    mb.addPart(Headers.of("Content-Disposition", "foem-date;name=\"" + entry.getKey() + "\""), RequestBody.create(null, (String) entry.getValue()));
+                    mb.addPart(Headers.of("Content-Disposition", "foem-date;name=\"" + entry.getKey() + "\""),
+                            RequestBody.create(null, (String) entry.getValue()));
 
                 }
             }

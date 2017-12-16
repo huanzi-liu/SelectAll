@@ -2,6 +2,7 @@ package com.example.administrator.okhttp.response;
 
 import android.os.Handler;
 import android.os.Looper;
+import android.util.Log;
 
 import com.example.administrator.okhttp.exception.OkHttpException;
 import com.example.administrator.okhttp.listener.DisposeDataHandle;
@@ -39,6 +40,8 @@ public class CommonJsonCallback implements Callback {
 
     private Gson gson = new Gson();
 
+    private static final String TAG = "CommonJsonCallback";
+
     public CommonJsonCallback(DisposeDataHandle handle){
         listener = handle.listener;
         aClass = handle.aClass;
@@ -69,10 +72,12 @@ public class CommonJsonCallback implements Callback {
     }
 
     public void handlerResponse(String result){
+        Log.e(TAG, "handlerResponse: "+result );
         if (result == null || result.equals("")){
             listener.onFailure(new OkHttpException(NETWORK_ERROR,EMPTY));
         }
-        try {
+        listener.onSuccess(result);
+        /*try {
             JSONObject jsonObject = new JSONObject(result);
             if (jsonObject.has(RESULT_CODE)){
 
@@ -112,6 +117,6 @@ public class CommonJsonCallback implements Callback {
         }catch (Exception e){
             listener.onFailure(new OkHttpException(OTHER_ERROR,e.getMessage()));
             e.printStackTrace();
-        }
+        }*/
     }
 }
